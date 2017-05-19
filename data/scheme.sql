@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.5.2
--- https://www.phpmyadmin.net/
+-- version 4.5.1
+-- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1
--- Время создания: Май 17 2017 г., 21:18
--- Версия сервера: 10.1.21-MariaDB
--- Версия PHP: 5.6.30
+-- Время создания: Май 19 2017 г., 15:10
+-- Версия сервера: 10.1.16-MariaDB
+-- Версия PHP: 5.6.24
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `category` (
   `category_id` int(10) NOT NULL,
-  `name` varchar(100) NOT NULL
+  `name` varchar(100) NOT NULL DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -54,7 +54,6 @@ CREATE TABLE `post` (
 --
 
 CREATE TABLE `post_category` (
-  `id` int(10) NOT NULL,
   `post_id` int(10) NOT NULL,
   `category_id` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -67,13 +66,13 @@ CREATE TABLE `post_category` (
 
 CREATE TABLE `user` (
   `user_id` int(10) NOT NULL,
-  `username` varchar(100) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `login` varchar(64) NOT NULL,
+  `username` varchar(100) NOT NULL DEFAULT '',
+  `email` varchar(100) NOT NULL DEFAULT '',
+  `login` varchar(64) NOT NULL DEFAULT '',
   `date_birth` date NOT NULL,
-  `gender` varchar(10) NOT NULL,
+  `gender` varchar(10) NOT NULL DEFAULT '',
   `about_yourself` text NOT NULL,
-  `role` varchar(10) NOT NULL
+  `role` varchar(10) NOT NULL DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -91,14 +90,13 @@ ALTER TABLE `category`
 --
 ALTER TABLE `post`
   ADD PRIMARY KEY (`post_id`),
-  ADD KEY `id_user` (`user_id`);
+  ADD KEY `user_id` (`user_id`) USING BTREE;
 
 --
 -- Индексы таблицы `post_category`
 --
 ALTER TABLE `post_category`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `post_id` (`post_id`),
+  ADD PRIMARY KEY (`post_id`,`category_id`),
   ADD KEY `category_id` (`category_id`);
 
 --
@@ -121,11 +119,6 @@ ALTER TABLE `category`
 --
 ALTER TABLE `post`
   MODIFY `post_id` int(10) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT для таблицы `post_category`
---
-ALTER TABLE `post_category`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT для таблицы `user`
 --
