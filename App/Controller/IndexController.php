@@ -7,6 +7,6 @@ class IndexController
     }
     
     public function helloAction() {
-        return 'Hello.';
+        echo 'Hello.';
     }
 }

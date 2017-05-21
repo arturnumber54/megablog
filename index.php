@@ -1,8 +1,6 @@
 <?php
-/* include "Core/Routing/Router.php";
-
-$router = new Router();
-var_dump($router->route()); */
+include "Core/Routing/Router.php";
+include "Core/Dispatcher/Dispatcher.php";
 
 // Функция-автозагрузчик
 spl_autoload_register(function ($class) {
@@ -12,5 +10,6 @@ spl_autoload_register(function ($class) {
     }
 });
 
-$i = new IndexController();
-var_dump($i->helloAction());
+
+$dispatcher = new Dispatcher();
+$dispatcher->launch_process();
