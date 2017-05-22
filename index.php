@@ -1,6 +1,7 @@
 <?php
 include "Core/Routing/Router.php";
 include "Core/Dispatcher/Dispatcher.php";
+include "Core/Exception/NotFoundControllerException.php";
 
 // Функция-автозагрузчик
 spl_autoload_register(function ($class) {
@@ -12,4 +13,10 @@ spl_autoload_register(function ($class) {
 
 
 $dispatcher = new Dispatcher();
-$dispatcher->launch_process();
+
+try {
+    $dispatcher->process();
+} catch (NotFoundControllerException $exc) {
+    echo $exc->getMessage();
+    die();
+}

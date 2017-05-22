@@ -2,11 +2,13 @@
 
 class IndexController
 {
-    public function __construct() {
+    public function __construct()
+    {
         
     }
     
-    public function helloAction() {
+    public function helloAction()
+    {
         echo 'Hello.';
     }
 }
