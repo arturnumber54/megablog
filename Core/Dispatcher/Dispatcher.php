@@ -1,38 +1,30 @@
 <?php
 
+namespace Core\Dispatcher;
+
 class Dispatcher
 {
-    private $router;
-    
     public function __construct()
     {
-        $this->router = new Router();
+        
     }
     
-    public function process()
+    public function process($params)
     {
-        // Получаем название контроллера и действия
-        $params = $this->router->route();
-        
-        if (!isset($params['controller'])) {
-            throw new NotFoundControllerException('Не удалось получить название контроллера.');
-        }
-        
-        if (!isset($params['action'])) {
-            throw new NotFoundControllerException('Не удалось получить название действия.');
-        }
-        
         // Существует ли класс котроллера с данным названием?
         $path = 'App/Controller/' . $params['controller'] . '.php';
         if (!file_exists($path)) {
-            throw new NotFoundControllerException("Контроллер {$params['controller']} не найден.");
+            throw new \Core\Exception\NotFoundControllerException("Контроллер {$params['controller']} не найден.");
         }
+        
+        $className = 'App\Controller\\' . $params['controller'];
+        
         // Создаем экземпляр класса контроллера
-        $object = new $params['controller'];
+        $object = new $className();
         
         // Проверка наличия метода
         if (!method_exists($object, $params['action'])) {
-            throw new NotFoundControllerException("Метод {$params['action']} не найден.");
+            throw new \Core\Exception\NotFoundControllerException("Метод {$params['action']} не найден.");
         }
         // Запуск метода действия
         $object->$params['action']();

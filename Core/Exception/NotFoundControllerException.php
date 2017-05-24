@@ -1,6 +1,8 @@
 <?php
 
-class NotFoundControllerException extends Exception
+namespace Core\Exception;
+
+class NotFoundControllerException extends \Exception
 {
     
 }

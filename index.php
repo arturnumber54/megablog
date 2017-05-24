@@ -1,22 +1,44 @@
 <?php
-include "Core/Routing/Router.php";
-include "Core/Dispatcher/Dispatcher.php";
-include "Core/Exception/NotFoundControllerException.php";
 
 // Функция-автозагрузчик
+/**
+ * @param string $class The fully-qualified class name.
+ * @return void
+ */
 spl_autoload_register(function ($class) {
-    $path = 'App/Controller/' . $class . '.php';
-    if (file_exists($path)) {
-        require_once $path;
+    
+    // project-specific namespace prefix
+    $prefix = '';
+
+    // base directory for the namespace prefix
+    $base_dir = './';
+
+    // does the class use the namespace prefix?
+    $len = strlen($prefix);
+    if (strncmp($prefix, $class, $len) !== 0) {
+        // no, move to the next registered autoloader
+        return;
+    }
+
+    // get the relative class name
+    $relative_class = substr($class, $len);
+
+    // replace the namespace prefix with the base directory, replace namespace
+    // separators with directory separators in the relative class name, append
+    // with .php
+    $file = $base_dir . str_replace('\\', '/', $relative_class) . '.php';
+    
+    // if the file exists, require it
+    if (file_exists($file)) {
+        require $file;
     }
 });
 
-
-$dispatcher = new Dispatcher();
+$core = new Core\Core();
 
 try {
-    $dispatcher->process();
-} catch (NotFoundControllerException $exc) {
+    $core->start();
+} catch (Core\Exception\NotFoundControllerException $exc) {
     echo $exc->getMessage();
     die();
 }
