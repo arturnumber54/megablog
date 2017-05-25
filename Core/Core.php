@@ -2,6 +2,10 @@
 
 namespace Core;
 
+use \Core\Routing\Router;
+use \Core\Dispatcher\Dispatcher;
+use \Core\Exception\NotFoundControllerException;
+
 class Core
 {
     private $router;
@@ -9,8 +13,8 @@ class Core
     
     public function __construct()
     {
-        $this->router = new \Core\Routing\Router();
-        $this->dispatcher = new \Core\Dispatcher\Dispatcher();
+        $this->router = new Router();
+        $this->dispatcher = new Dispatcher();
     }
     
     public function start()
@@ -19,11 +23,11 @@ class Core
         $params = $this->router->route();
         
         if (!isset($params['controller'])) {
-            throw new \Core\Exception\NotFoundControllerException('Не удалось получить название контроллера.');
+            throw new NotFoundControllerException('Не удалось получить название контроллера.');
         }
         
         if (!isset($params['action'])) {
-            throw new \Core\Exception\NotFoundControllerException('Не удалось получить название действия.');
+            throw new NotFoundControllerException('Не удалось получить название действия.');
         }
         
         // Обработка полученных параметров.
