@@ -6,11 +6,10 @@
             "email": "test@test.com"
         }
     ],
-    "require": {},
     "autoload": {
         "psr-4": {
             "Core\\": "Core/",
-            "App\\Controller\\": "App/Controller/"
+            "App\\": "App/"
         }
     }
 }
