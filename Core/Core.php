@@ -2,6 +2,7 @@
 
 namespace Core;
 
+use \Core\Render\Render;
 use \Core\Routing\Router;
 use \Core\Dispatcher\Dispatcher;
 use \Core\Exception\NotFoundControllerException;
@@ -9,11 +10,13 @@ use \Core\Exception\NotFoundControllerException;
 class Core
 {
     private $router;
+    private $render;
     private $dispatcher;
     
     public function __construct()
     {
         $this->router = new Router();
+        $this->render = new Render();
         $this->dispatcher = new Dispatcher();
     }
     
@@ -31,6 +34,8 @@ class Core
         }
         
         // Обработка полученных параметров.
-        $this->dispatcher->process($params);
+        $vars = $this->dispatcher->process($params);
+        
+        $this->render->view($params['controller'], $vars);
     }
 }

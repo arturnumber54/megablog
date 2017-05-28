@@ -11,6 +11,9 @@ class IndexController
     
     public function helloAction()
     {
-        echo 'Hello.';
+        $vars['titlePage'] = 'index';
+        $vars['msg'] = 'Hello!';
+        
+        return $vars;
     }
 }
