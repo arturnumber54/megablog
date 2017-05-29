@@ -2,18 +2,21 @@
 
 namespace App\Controller;
 
+use Core\Render\Render;
+
 class IndexController
 {
+    private $render;
+    
     public function __construct()
     {
-        
+        $this->render = new Render('App/View/');
     }
     
     public function helloAction()
     {
-        $vars['titlePage'] = 'index';
-        $vars['msg'] = 'Hello!';
+        $content = $this->render->view('index/hello.php', ['msg' => 'Hello!']);
         
-        return $vars;
+        echo $this->render->view('layouts/default.php', ['titlePage' => 'Index', 'content' => $content]);
     }
 }

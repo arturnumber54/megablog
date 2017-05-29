@@ -4,9 +4,19 @@ namespace Core\Render;
 
 class Render
 {
-    public function view($layoutName, $vars = [])
+    private $filesPath;
+    
+    public function __construct($filesPath)
+    {
+        $this->filesPath = $filesPath;
+    }
+    
+    public function view($fileName, $vars = [])
     {
         extract($vars);
-        require_once 'App/layouts/' . $layoutName . '.php';
+        
+        ob_start();
+            include $this->filesPath . $fileName;
+        return ob_get_clean();
     }
 }

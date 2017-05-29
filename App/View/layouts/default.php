@@ -4,7 +4,6 @@
         <title><?=$titlePage?></title>
     </head>
     <body>
-        <h1>indexController</h1>
-        <?=$msg?>
+        <?=$content?>
     </body>
 </html>

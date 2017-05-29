@@ -24,6 +24,6 @@ class Dispatcher
             throw new NotFoundControllerException("Метод {$params['action']} не найден.");
         }
         // Запуск метода действия
-        return $object->$params['action']();
+        $object->$params['action']();
     }
 }
