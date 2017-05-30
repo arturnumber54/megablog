@@ -2,10 +2,12 @@
 
 namespace Core\Routing;
 
+use \Core\Interfaces\RouterInterface;
+
 const DEFAULT_CONTROLLER = "index";
 const DEFAULT_ACTION = "index";
 
-class Router
+class Router implements RouterInterface
 {
     // Конструктор.
     public function __construct()

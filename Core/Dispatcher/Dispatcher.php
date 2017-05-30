@@ -3,8 +3,10 @@
 namespace Core\Dispatcher;
 
 use \Core\Exception\NotFoundControllerException;
+use \Core\Render\Render;
+use \Core\Interfaces\DispatcherInterface;
 
-class Dispatcher
+class Dispatcher implements DispatcherInterface
 {
     public function process($params)
     {
@@ -16,13 +18,16 @@ class Dispatcher
         
         $className = 'App\Controller\\' . $params['controller'];
         
+        $render = new Render('App/View/', 'layouts/default.php');
+        
         // Создаем экземпляр класса контроллера
-        $object = new $className();
+        $object = new $className($render);
         
         // Проверка наличия метода
         if (!method_exists($object, $params['action'])) {
             throw new NotFoundControllerException("Метод {$params['action']} не найден.");
         }
+        
         // Запуск метода действия
         $object->$params['action']();
     }
