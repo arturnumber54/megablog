@@ -20,11 +20,11 @@ class Render implements RenderInterface
         extract($vars);
         
         ob_start();
-            include $this->filesPath . $fileName;
+        include $this->filesPath . $fileName;
         $content = ob_get_clean();
         
         ob_start();
-            include $this->filesPath . $this->layoutName;
+        include $this->filesPath . $this->layoutName;
         echo ob_get_clean();
     }
 }
