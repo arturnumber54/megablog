@@ -11,5 +11,8 @@
             "Core\\": "Core/",
             "App\\": "App/"
         }
+    },
+    "require": {
+        "twbs/bootstrap": "^3.3"
     }
 }
